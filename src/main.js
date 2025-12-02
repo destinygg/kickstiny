@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import ControlsBar from "./controls/bar/ControlsBar.jsx";
+import Container from "./controls/container/Container.jsx";
 import { waitForElement } from "./utils/dom.js";
 import { waitForIVSCore } from "./utils/ivs.js";
 import mainStyles from "./main.scss";
@@ -49,16 +49,15 @@ if (window.__kickQualityExtensionInjected) {
     console.debug("[Kickstiny] Injected styles");
   }
 
-  function renderControls(core, container) {
+  function renderControls(core, videoContainer) {
     const root = document.createElement("div");
-    root.className = "kickstiny-controls";
-    root.id = "kickstiny-controls";
-    container.appendChild(root);
+    root.id = "kickstiny";
+    videoContainer.appendChild(root);
 
     const reactRoot = ReactDOM.createRoot(root);
-    const reactComponent = React.createElement(ControlsBar, {
+    const reactComponent = React.createElement(Container, {
       core,
-      container,
+      videoContainer,
     });
     reactRoot.render(reactComponent);
     console.debug("[Kickstiny] Rendered custom controls");

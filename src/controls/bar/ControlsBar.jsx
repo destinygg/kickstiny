@@ -1,11 +1,10 @@
-import React, { useRef } from "react";
+import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
 import { useVolumeControl } from "../volume/useVolumeControl.js";
 import { usePlaybackControl } from "../play/usePlaybackControl.js";
 import { useFullscreenControl } from "../fullscreen/useFullscreenControl.js";
 import { useChannelInfo } from "../info/useChannelInfo.js";
-import { useControlsVisibility } from "./useControlsVisibility.js";
 import { useKeyboardControls } from "./useKeyboardControls.js";
 import PlayPauseButton from "../play/PlayPauseButton.jsx";
 import VolumeControls from "../volume/VolumeControls.jsx";
@@ -14,21 +13,24 @@ import FullscreenButton from "../fullscreen/FullscreenButton.jsx";
 import KickButton from "../watch/KickButton.jsx";
 import ChannelInfo from "../info/ChannelInfo.jsx";
 
-export default function ControlsBar({ core, container }) {
+export default function ControlsBar({
+  core,
+  videoContainer,
+  shouldShow,
+  barRef,
+}) {
   const { volume, isMuted, handleVolumeChange, handleMuteToggle } =
     useVolumeControl(core);
   const { isPlaying, handlePlayPause } = usePlaybackControl(core);
   const { isFullscreen, handleFullscreenToggle } =
-    useFullscreenControl(container);
+    useFullscreenControl(videoContainer);
   const { username, viewerCount, uptime } = useChannelInfo();
-  const barRef = useRef(null);
-  const { shouldShow } = useControlsVisibility(container, barRef);
 
   useKeyboardControls({
     onPlayPause: handlePlayPause,
     onMuteToggle: handleMuteToggle,
     onFullscreenToggle: handleFullscreenToggle,
-    container,
+    container: videoContainer,
   });
 
   return (

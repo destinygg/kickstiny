@@ -1,0 +1,14 @@
+@use "~@destinygg/libstiny" as dgg;
+
+.kickstiny-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+
+  .controls-bar {
+    position: absolute;
+    inset-inline: dgg.$space-4;
+    inset-block: auto dgg.$space-4;
+  }
+}
+

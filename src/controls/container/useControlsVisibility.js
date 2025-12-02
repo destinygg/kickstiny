@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 
-export function useControlsVisibility(container, controlsBarRef) {
+export function useControlsVisibility(containerRef, controlsBarRef) {
   const [isHovered, setIsHovered] = useState(false);
   const [isHoveringControls, setIsHoveringControls] = useState(false);
   const [isInactive, setIsInactive] = useState(false);
@@ -45,7 +45,7 @@ export function useControlsVisibility(container, controlsBarRef) {
 
   // Track container hover
   useEffect(() => {
-    if (!container) return;
+    if (!containerRef.current) return;
 
     const handleMouseEnter = () => {
       setIsHovered(true);
@@ -58,6 +58,7 @@ export function useControlsVisibility(container, controlsBarRef) {
       clearInactivityTimer();
     };
 
+    const container = containerRef.current;
     container.addEventListener("mouseenter", handleMouseEnter);
     container.addEventListener("mouseleave", handleMouseLeave);
 
@@ -65,7 +66,7 @@ export function useControlsVisibility(container, controlsBarRef) {
       container.removeEventListener("mouseenter", handleMouseEnter);
       container.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [container, clearInactivityTimer]);
+  }, [clearInactivityTimer]);
 
   // Track controls bar hover
   useEffect(() => {
@@ -97,10 +98,10 @@ export function useControlsVisibility(container, controlsBarRef) {
 
   // Track mouse movement for inactivity
   useEffect(() => {
-    if (!container) return;
+    if (!containerRef.current) return;
 
     const handleMouseMove = (e) => {
-      const isOverContainer = container.contains(e.target);
+      const isOverContainer = containerRef.current.contains(e.target);
       const isOverControls =
         controlsBarRef.current && controlsBarRef.current.contains(e.target);
 
@@ -120,6 +121,7 @@ export function useControlsVisibility(container, controlsBarRef) {
       startInactivityTimer();
     };
 
+    const container = containerRef.current;
     container.addEventListener("mousemove", handleMouseMove);
 
     // Set initial timeout if hovered
@@ -131,7 +133,7 @@ export function useControlsVisibility(container, controlsBarRef) {
       container.removeEventListener("mousemove", handleMouseMove);
       clearInactivityTimer();
     };
-  }, [container, isHovered, startInactivityTimer, clearInactivityTimer]);
+  }, [isHovered, startInactivityTimer, clearInactivityTimer]);
 
   // Calculate visibility
   // Show only when hovering over video AND (hovering over controls OR not inactive)
@@ -139,8 +141,9 @@ export function useControlsVisibility(container, controlsBarRef) {
 
   // Hide cursor when controls are hidden (hovering over video but inactive)
   useEffect(() => {
-    if (!container) return;
+    if (!containerRef.current) return;
 
+    const container = containerRef.current;
     const shouldHideCursor = isHovered && !shouldShow;
 
     if (shouldHideCursor) {
@@ -152,7 +155,7 @@ export function useControlsVisibility(container, controlsBarRef) {
     return () => {
       container.style.cursor = "";
     };
-  }, [container, isHovered, shouldShow]);
+  }, [isHovered, shouldShow]);
 
   return { shouldShow };
 }
