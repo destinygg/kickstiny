@@ -1,0 +1,33 @@
+name: Deploy to R2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build and Deploy to R2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run production build
+        run: npm run build
+
+      - name: Deploy to Cloudflare R2
+        run: |
+          aws s3 cp ./kickstiny.user.js s3://r2cdn-prod/kickstiny/kickstiny.user.js --endpoint-url https://883bb318ad59e2211a4acb9610074d91.r2.cloudflarestorage.com
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.CF_R2_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_KEY }}
+          AWS_REGION: auto
