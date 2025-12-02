@@ -1,6 +1,7 @@
 import * as esbuild from "esbuild";
 import * as sass from "sass";
 import { resolve } from "path";
+import packageJson from "./package.json" with { type: "json" };
 
 const env = process.argv.includes("--prod") ? "prod" : "dev";
 const watch = process.argv.includes("--watch") ? true : false;
@@ -8,7 +9,7 @@ const watch = process.argv.includes("--watch") ? true : false;
 const userscriptHeader = `// ==UserScript==
 // @name         Kickstiny: Enhanced Kick Embedded Player
 // @namespace    https://www.destiny.gg
-// @version      1.0.0
+// @version      ${packageJson.version}
 // @description  Replaces the controls in the Kick embedded player with custom controls that offer a volume slider, quality selector, and more.
 // @author       Destinygg
 // @match        https://player.kick.com/*
