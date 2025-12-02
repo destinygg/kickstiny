@@ -35,10 +35,6 @@ export function useVolumeControl(core) {
 
   useEffect(() => {
     const handler = (event) => {
-      if (event.data?.arg?.key !== "bufferedPosition") {
-        console.debug("[useVolumeControl] handler", event.data?.arg);
-      }
-
       // Re-apply initial volume after the player is ready, after Kick sets it
       // to their default of 0.6.
       if (
