@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { usePreferences } from "../usePreferences.js";
 
 function clampVolume(volume) {
@@ -13,6 +13,7 @@ export function useVolumeControl(core) {
   const { savedVolume, setSavedVolume } = usePreferences();
   const [volume, setVolume] = useState(savedVolume);
   const [isMuted, setIsMuted] = useState(false);
+  const hasAppliedInitialVolume = useRef(false);
 
   const handleVolumeChange = useCallback(
     (newVolume) => {
@@ -34,6 +35,22 @@ export function useVolumeControl(core) {
 
   useEffect(() => {
     const handler = (event) => {
+      if (event.data?.arg?.key !== "bufferedPosition") {
+        console.debug("[useVolumeControl] handler", event.data?.arg);
+      }
+
+      // Re-apply initial volume after the player is ready, after Kick sets it
+      // to their default of 0.6.
+      if (
+        !hasAppliedInitialVolume.current &&
+        event.data?.arg?.key === "state" &&
+        event.data?.arg?.value === "Ready"
+      ) {
+        console.debug("[Kickstiny] Re-applying saved volume");
+        hasAppliedInitialVolume.current = true;
+        handleVolumeChange(savedVolume);
+      }
+
       if (event.data?.arg?.key === "muted") {
         const newMuted = event.data.arg.value;
         if (newMuted !== isMuted) {
@@ -47,7 +64,7 @@ export function useVolumeControl(core) {
     return () => {
       core.worker.removeEventListener("message", handler);
     };
-  }, [core, savedVolume, isMuted]);
+  }, [core, savedVolume, isMuted, handleVolumeChange]);
 
   return {
     volume,
