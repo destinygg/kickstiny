@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Kickstiny - Enhanced Kick Embedded Player
+// @name         Kickstiny Dummy Script
 // @namespace    https://www.destiny.gg
 // @version      0.0.1
 // @description  Replaces the controls in the Kick embedded player with custom controls that offer a volume slider, quality selector, and more.
