@@ -21,14 +21,13 @@ A userscript that replaces the controls in the Kick embedded player with custom 
 
 ![Controls Bar](img/controls-bar.png)
 
-## Installation
+## How to Install
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/) for your web browser
-2. Click [here](https://r2cdn.destiny.gg/kickstiny/kickstiny.user.js) to open the userscript
-3. The Tampermonkey dashboard will open and prompt you to install the script
-4. Click "Install"
+2. Click [here](https://r2cdn.destiny.gg/kickstiny/kickstiny.user.js) to open the userscript in the Tampermonkey dashboard, which will prompt you to install
+3. Click "Install"
 
-> Note: Chrome users must enable **both** "Developer Mode" on the extensions page and the "Allow User Scripts" Tampermonkey setting for userscripts to work. See the [Tampermonkey FAQ](https://www.tampermonkey.net/faq.php?locale=en#Q209) for more details/guidance.
+> Note: Chrome and Edge users must enable **both** "Developer Mode" on the extensions page and the "Allow User Scripts" Tampermonkey setting for userscripts to work. See the [Tampermonkey FAQ](https://www.tampermonkey.net/faq.php?locale=en#Q209) for more details/guidance.
 
 ## Development
 
