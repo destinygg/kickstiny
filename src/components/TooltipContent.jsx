@@ -1,3 +1,4 @@
+import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 export default function TooltipContent({ ref, children, ...props }) {

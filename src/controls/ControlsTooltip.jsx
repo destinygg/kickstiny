@@ -1,3 +1,4 @@
+import React from "react";
 import TooltipContent from "../components/TooltipContent.jsx";
 import TooltipArrow from "../components/TooltipArrow.jsx";
 
