@@ -1,4 +1,3 @@
-import React from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 
@@ -28,10 +27,16 @@ const buttonVariants = cva("button", {
   },
 });
 
-const Button = React.forwardRef(function Button(
-  { variant, size, fullWidth, iconOnly, className, children, ...props },
+export default function Button({
   ref,
-) {
+  variant,
+  size,
+  fullWidth,
+  iconOnly,
+  className,
+  children,
+  ...props
+}) {
   return (
     <button
       ref={ref}
@@ -44,6 +49,4 @@ const Button = React.forwardRef(function Button(
       {children}
     </button>
   );
-});
-
-export default Button;
+}
