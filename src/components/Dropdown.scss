@@ -62,6 +62,7 @@
   }
 
   &__separator {
+    flex-shrink: 0;
     height: 1px;
     background-color: dgg.$palette-neutral-6;
     margin-block: dgg.$space-1;
@@ -71,7 +72,32 @@
 .settings-dropdown {
   width: 180px;
   max-height: var(--radix-dropdown-menu-content-available-height, auto);
+  overflow-x: hidden;
   overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: dgg.$palette-neutral-6 transparent;
+
+  clip-path: inset(0 round dgg.$semantic-radii-medium);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin-block: dgg.$space-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: dgg.$palette-neutral-6;
+    border-radius: dgg.$semantic-radii-small;
+    border: 2px solid dgg.$palette-neutral-2;
+
+    &:hover {
+      background-color: dgg.$palette-neutral-7;
+    }
+  }
 }
 
 @keyframes dropdown-open {
