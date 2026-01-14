@@ -1,41 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Settings } from "lucide-react";
 import Button from "../../components/Button.jsx";
 import ControlsTooltip from "../ControlsTooltip.jsx";
-import { useQualitySelector } from "./useQualitySelector.js";
-import { MENU_MAIN, MENU_QUALITY } from "../../constants/SettingsButton.js";
 import MainMenu from "./MainMenu.jsx";
 import QualityMenu from "./QualityMenu.jsx";
+import { useSettings } from "./useSettings.js";
+
+const MENU_MAIN = "MENU_MAIN";
+const MENU_QUALITY = "MENU_QUALITY";
 
 export default function SettingsButton({ core, container, shouldShow }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentMenu, setCurrentMenu] = useState(MENU_MAIN);
-
-  useEffect(() => {
-    if (!shouldShow) {
-      setIsOpen(false);
-      setCurrentMenu(MENU_MAIN);
-    }
-  }, [shouldShow]);
-  const { selectedQuality, qualityOptions, handleQualityChange } =
-    useQualitySelector(core);
-
-  const handleOpenChange = (open) => {
-    setIsOpen(open);
-    if (!open) {
-      setCurrentMenu(MENU_MAIN);
-    }
-  };
-
-  const navigateToQuality = () => {
-    setCurrentMenu(MENU_QUALITY);
-  };
-
-  const navigateBack = () => {
-    setCurrentMenu(MENU_MAIN);
-  };
+  const {
+    currentMenu,
+    handleOpenChange,
+    handleQualityChange,
+    isOpen,
+    navigateBack,
+    navigateToQuality,
+    selectedQuality,
+    qualityOptions,
+  } = useSettings(core, shouldShow, MENU_MAIN, MENU_QUALITY);
 
   return (
     <Tooltip.Root>
