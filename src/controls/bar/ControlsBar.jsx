@@ -7,7 +7,7 @@ import { useChannelInfo } from "../info/useChannelInfo.js";
 import { useKeyboardControls } from "./useKeyboardControls.js";
 import PlayPauseButton from "../play/PlayPauseButton.jsx";
 import VolumeControls from "../volume/VolumeControls.jsx";
-import QualityButton from "../quality/QualityButton.jsx";
+import SettingsButton from "../settings/SettingsButton.jsx";
 import FullscreenButton from "../fullscreen/FullscreenButton.jsx";
 import KickButton from "../watch/KickButton.jsx";
 import ChannelInfo from "../info/ChannelInfo.jsx";
@@ -68,7 +68,11 @@ export default function ControlsBar({
         </div>
 
         <div className="controls-bar__right">
-          <QualityButton core={core} container={barRef.current} />
+          <SettingsButton
+            core={core}
+            container={barRef.current}
+            shouldShow={shouldShow}
+          />
 
           <FullscreenButton
             isFullscreen={isFullscreen}

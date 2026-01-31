@@ -3,7 +3,10 @@ import { usePreferences } from "../usePreferences.js";
 
 export function useQualitySelector(core) {
   const { savedQuality, setSavedQuality } = usePreferences();
-  const [selectedQuality, setSelectedQuality] = useState("auto");
+  const [selectedQuality, setSelectedQuality] = useState({
+    label: "Auto",
+    value: "auto",
+  });
   const [qualities, setQualities] = useState([]);
 
   const handleQualityChange = useCallback(
@@ -12,7 +15,12 @@ export function useQualitySelector(core) {
         return;
       }
 
-      setSelectedQuality(value);
+      const option =
+        value === "auto"
+          ? { label: "Auto", value: "auto" }
+          : { label: value, value: value };
+
+      setSelectedQuality(option);
 
       if (value === "auto") {
         core.setAutoQualityMode(true);
