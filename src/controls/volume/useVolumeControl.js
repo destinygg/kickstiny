@@ -9,10 +9,19 @@ function normalizeVolume(volume) {
   return clampVolume(volume) / 100;
 }
 
+function getUrlMuted() {
+  try {
+    return new URLSearchParams(window.location.search).get("muted") === "true";
+  } catch {
+    return false;
+  }
+}
+
 export function useVolumeControl(core) {
   const { savedVolume, setSavedVolume } = usePreferences();
+  const urlMuted = getUrlMuted();
   const [volume, setVolume] = useState(savedVolume);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(urlMuted);
   const hasAppliedInitialVolume = useRef(false);
 
   const handleVolumeChange = useCallback(
@@ -36,7 +45,7 @@ export function useVolumeControl(core) {
   useEffect(() => {
     const handler = (event) => {
       // Re-apply initial volume after the player is ready, after Kick sets it
-      // to their default of 0.6.
+      // to their default of 0.6. Respect muted=true in URL (embed hosts that pass ?muted=true).
       if (
         !hasAppliedInitialVolume.current &&
         event.data?.arg?.key === "state" &&
@@ -44,7 +53,14 @@ export function useVolumeControl(core) {
       ) {
         console.debug("[Kickstiny] Re-applying saved volume");
         hasAppliedInitialVolume.current = true;
-        handleVolumeChange(savedVolume);
+        if (urlMuted) {
+          core.setVolume(normalizeVolume(savedVolume));
+          core.setMuted(true);
+          setVolume(savedVolume);
+          setIsMuted(true);
+        } else {
+          handleVolumeChange(savedVolume);
+        }
       }
 
       if (event.data?.arg?.key === "muted") {
@@ -60,7 +76,7 @@ export function useVolumeControl(core) {
     return () => {
       core.worker.removeEventListener("message", handler);
     };
-  }, [core, savedVolume, isMuted, handleVolumeChange]);
+  }, [core, savedVolume, isMuted, handleVolumeChange, urlMuted]);
 
   return {
     volume,
