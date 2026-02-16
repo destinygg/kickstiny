@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { usePreferences } from "../usePreferences.js";
 
+const AUTO_QUALITY = { label: "Auto", value: "auto" };
+
 export function useQualitySelector(core) {
   const { savedQuality, setSavedQuality } = usePreferences();
-  const [selectedQuality, setSelectedQuality] = useState({
-    label: "Auto",
-    value: "auto",
-  });
+  const [selectedQuality, setSelectedQuality] = useState(AUTO_QUALITY);
   const [qualities, setQualities] = useState([]);
 
   const handleQualityChange = useCallback(
@@ -16,9 +15,7 @@ export function useQualitySelector(core) {
       }
 
       const option =
-        value === "auto"
-          ? { label: "Auto", value: "auto" }
-          : { label: value, value: value };
+        value === "auto" ? AUTO_QUALITY : { label: value, value: value };
 
       setSelectedQuality(option);
 
@@ -78,7 +75,7 @@ export function useQualitySelector(core) {
   }, [qualities, savedQuality, handleQualityChange]);
 
   const qualityOptions = [
-    { value: "auto", label: "Auto" },
+    AUTO_QUALITY,
     ...qualities.map((q) => ({ value: q.name, label: q.name })),
   ];
 
