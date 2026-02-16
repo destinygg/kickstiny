@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
-export function useDevMode(core) {
-  const [isDevMode, setIsDevMode] = useState(false);
+export function useIvsDebug(core) {
+  const [isIvsDebug, setIsIvsDebug] = useState(false);
 
   useEffect(() => {
-    if (!isDevMode) {
+    if (!isIvsDebug) {
       return;
     }
 
@@ -29,7 +29,7 @@ export function useDevMode(core) {
     return () => {
       core.worker.removeEventListener("message", handler);
     };
-  }, [isDevMode, core]);
+  }, [isIvsDebug, core]);
 
-  return { isDevMode, setIsDevMode };
+  return { isIvsDebug, setIsIvsDebug };
 }

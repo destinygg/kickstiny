@@ -8,7 +8,7 @@ import MainMenu from "./MainMenu.jsx";
 import QualityMenu from "./QualityMenu.jsx";
 import { useSettings } from "./useSettings.js";
 import { useQualitySelector } from "./useQualitySelector.js";
-import { useDevMode } from "./useDevMode.js";
+import { useIvsDebug } from "./useIvsDebug.js";
 
 export default function SettingsButton({ core, container, shouldShow }) {
   const {
@@ -23,7 +23,7 @@ export default function SettingsButton({ core, container, shouldShow }) {
   const { selectedQuality, qualityOptions, handleQualityChange } =
     useQualitySelector(core);
 
-  const { isDevMode, setIsDevMode } = useDevMode(core);
+  const { isIvsDebug, setIsIvsDebug } = useIvsDebug(core);
 
   return (
     <Tooltip.Root>
@@ -57,8 +57,8 @@ export default function SettingsButton({ core, container, shouldShow }) {
               <MainMenu
                 onNavigateQuality={navigateToQuality}
                 selectedQuality={selectedQuality}
-                isDevMode={isDevMode}
-                onDevModeChange={setIsDevMode}
+                isIvsDebug={isIvsDebug}
+                onIvsDebugChange={setIsIvsDebug}
               />
             )}
 

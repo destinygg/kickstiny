@@ -6,8 +6,8 @@ import Switch from "../../components/Switch.jsx";
 export default function MainMenu({
   onNavigateQuality,
   selectedQuality,
-  isDevMode,
-  onDevModeChange,
+  isIvsDebug,
+  onIvsDebugChange,
 }) {
   return (
     <>
@@ -32,8 +32,8 @@ export default function MainMenu({
             e.preventDefault();
           }}
         >
-          <span>Dev Mode</span>
-          <Switch checked={isDevMode} onCheckedChange={onDevModeChange} />
+          <span>IVS Debug</span>
+          <Switch checked={isIvsDebug} onCheckedChange={onIvsDebugChange} />
         </DropdownMenu.Item>
       )}
     </>
