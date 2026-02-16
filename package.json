@@ -1,6 +1,6 @@
 {
   "name": "kickstiny",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Replaces the controls in the Kick embedded player with custom controls that offer a volume slider, quality selector, and more.",
   "type": "module",
   "scripts": {
