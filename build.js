@@ -111,6 +111,9 @@ const buildOptions = {
       },
     },
   ],
+  define: {
+    "process.env.NODE_ENV": JSON.stringify(env),
+  },
   mainFields: ["browser", "module", "main"],
   conditions: ["production", "default"],
 };
@@ -119,9 +122,6 @@ if (env === "prod") {
   Object.assign(buildOptions, {
     minify: true,
     pure: ["console.debug"], // Remove all `console.debug()` calls in production builds.
-    define: {
-      "process.env.NODE_ENV": '"production"',
-    },
   });
 }
 

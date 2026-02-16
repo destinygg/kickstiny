@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 
 const QUALITY_STORAGE_KEY = "kickstiny.preference.quality";
 const VOLUME_STORAGE_KEY = "kickstiny.preference.volume";
+const IVS_DEBUG_STORAGE_KEY = "kickstiny.preference.ivsDebug";
 
 const DEFAULT_VOLUME = 100;
 
@@ -25,6 +26,16 @@ export function usePreferences() {
     }
   });
 
+  const [isIvsDebug, setIsIvsDebugState] = useState(() => {
+    try {
+      const stored = window.localStorage.getItem(IVS_DEBUG_STORAGE_KEY);
+      return stored === "true";
+    } catch (err) {
+      console.log("[Kickstiny] Unable to read ivs debug preference", err);
+      return false;
+    }
+  });
+
   const setSavedQuality = useCallback((value) => {
     try {
       window.localStorage.setItem(QUALITY_STORAGE_KEY, value);
@@ -43,10 +54,21 @@ export function usePreferences() {
     }
   }, []);
 
+  const setIsIvsDebug = useCallback((value) => {
+    try {
+      window.localStorage.setItem(IVS_DEBUG_STORAGE_KEY, value.toString());
+      setIsIvsDebugState(value);
+    } catch (err) {
+      console.log("[Kickstiny] Unable to persist ivs debug preference", err);
+    }
+  }, []);
+
   return {
     savedQuality,
     savedVolume,
+    isIvsDebug,
     setSavedQuality,
     setSavedVolume,
+    setIsIvsDebug,
   };
 }

@@ -1,0 +1,51 @@
+@use "~@destinygg/libstiny" as dgg;
+@use "@destinygg/libstiny/lib/utils/transitions" as transitions;
+
+.switch {
+  &__slider {
+    @include transitions.create-transition(all, default);
+    position: relative;
+    display: inline-block;
+    width: dgg.$switch-width;
+    height: dgg.$switch-height;
+    flex-shrink: 0;
+    cursor: pointer;
+    background-color: dgg.$switch-background-default-rest;
+    border-radius: dgg.$semantic-radii-pill;
+    border: none;
+    padding: 0;
+
+    &:hover {
+      background-color: dgg.$switch-background-default-hover;
+    }
+
+    &[data-state="checked"] {
+      background-color: dgg.$switch-background-active-rest;
+
+      &:hover {
+        background-color: dgg.$switch-background-active-hover;
+      }
+    }
+
+    // Override libstiny's ::before thumb in favor of the Radix UI Switch thumb element.
+    &::before {
+      content: none;
+    }
+  }
+
+  &__thumb {
+    @include transitions.create-transition(all, movement);
+    display: block;
+    position: absolute;
+    height: dgg.$switch-toggle-size;
+    width: dgg.$switch-toggle-size;
+    left: dgg.$space-1;
+    bottom: dgg.$space-1;
+    background-color: dgg.$switch-toggle-background;
+    border-radius: 50%;
+
+    &[data-state="checked"] {
+      transform: translateX(dgg.$switch-toggle-size);
+    }
+  }
+}
