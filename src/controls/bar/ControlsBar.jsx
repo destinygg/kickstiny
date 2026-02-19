@@ -20,6 +20,8 @@ export default function ControlsBar({
   isPlaying,
   handlePlayPause,
   showControls,
+  clickToPlayPause,
+  onClickToPlayChange,
 }) {
   const { volume, isMuted, handleVolumeChange, handleMuteToggle } =
     useVolumeControl(core);
@@ -72,6 +74,8 @@ export default function ControlsBar({
             core={core}
             container={barRef.current}
             shouldShow={shouldShow}
+            clickToPlayPause={clickToPlayPause}
+            onClickToPlayChange={onClickToPlayChange}
           />
 
           <FullscreenButton
