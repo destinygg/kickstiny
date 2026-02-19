@@ -39,10 +39,15 @@ export function usePreferences() {
 
   const [clickToPlayPause, setClickToPlayPauseState] = useState(() => {
     try {
-      const stored = window.localStorage.getItem(CLICK_TO_PLAY_PAUSE_STORAGE_KEY);
+      const stored = window.localStorage.getItem(
+        CLICK_TO_PLAY_PAUSE_STORAGE_KEY,
+      );
       return stored !== null ? stored === "true" : true;
     } catch (err) {
-      console.log("[Kickstiny] Unable to read click to play/pause preference", err);
+      console.log(
+        "[Kickstiny] Unable to read click to play/pause preference",
+        err,
+      );
       return true;
     }
   });
@@ -76,10 +81,16 @@ export function usePreferences() {
 
   const setClickToPlayPause = useCallback((value) => {
     try {
-      window.localStorage.setItem(CLICK_TO_PLAY_PAUSE_STORAGE_KEY, value.toString());
+      window.localStorage.setItem(
+        CLICK_TO_PLAY_PAUSE_STORAGE_KEY,
+        value.toString(),
+      );
       setClickToPlayPauseState(value);
     } catch (err) {
-      console.log("[Kickstiny] Unable to persist click to play/pause preference", err);
+      console.log(
+        "[Kickstiny] Unable to persist click to play/pause preference",
+        err,
+      );
     }
   }, []);
 

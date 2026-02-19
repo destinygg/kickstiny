@@ -34,7 +34,10 @@ export default function MainMenu({
         }}
       >
         <span>Pause on Click</span>
-        <Switch checked={clickToPlayPause} onCheckedChange={onClickToPlayChange} />
+        <Switch
+          checked={clickToPlayPause}
+          onCheckedChange={onClickToPlayChange}
+        />
       </DropdownMenu.Item>
 
       {process.env.NODE_ENV === "dev" && (
