@@ -10,12 +10,17 @@ if (window.__kickQualityExtensionInjected) {
 } else {
   window.__kickQualityExtensionInjected = true;
 
+  const RETRY_DELAY_MS = 3000;
+  const MAX_ATTEMPTS = 5;
+
   (async () => {
-    try {
-      await init();
-    } catch (err) {
-      console.warn("[Kickstiny] Initialization error", err);
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      const success = await init();
+      if (success) return;
+      console.log(`[Kickstiny] Retrying in ${RETRY_DELAY_MS}ms..`);
+      await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
     }
+      console.warn("[Kickstiny] Could not initialize after all attempts, giving up.");
   })();
 
   async function init() {
@@ -25,13 +30,13 @@ if (window.__kickQualityExtensionInjected) {
     });
 
     if (!core) {
-      return;
+      return false;
     }
 
     const video = await waitForElement("video");
     if (!video) {
       console.warn("[Kickstiny] Video element not found");
-      return;
+      return false;
     }
 
     document.querySelectorAll(".z-controls").forEach((element) => {
@@ -40,6 +45,7 @@ if (window.__kickQualityExtensionInjected) {
 
     injectStyles();
     renderControls(core, video.parentElement);
+    return true;
   }
 
   function injectStyles() {
