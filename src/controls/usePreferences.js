@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 const QUALITY_STORAGE_KEY = "kickstiny.preference.quality";
 const VOLUME_STORAGE_KEY = "kickstiny.preference.volume";
 const IVS_DEBUG_STORAGE_KEY = "kickstiny.preference.ivsDebug";
+const CLICK_TO_PLAY_PAUSE_STORAGE_KEY = "kickstiny.preference.clickToPlayPause";
 
 const DEFAULT_VOLUME = 100;
 
@@ -36,6 +37,21 @@ export function usePreferences() {
     }
   });
 
+  const [clickToPlayPause, setClickToPlayPauseState] = useState(() => {
+    try {
+      const stored = window.localStorage.getItem(
+        CLICK_TO_PLAY_PAUSE_STORAGE_KEY,
+      );
+      return stored !== null ? stored === "true" : true;
+    } catch (err) {
+      console.log(
+        "[Kickstiny] Unable to read click to play/pause preference",
+        err,
+      );
+      return true;
+    }
+  });
+
   const setSavedQuality = useCallback((value) => {
     try {
       window.localStorage.setItem(QUALITY_STORAGE_KEY, value);
@@ -63,12 +79,29 @@ export function usePreferences() {
     }
   }, []);
 
+  const setClickToPlayPause = useCallback((value) => {
+    try {
+      window.localStorage.setItem(
+        CLICK_TO_PLAY_PAUSE_STORAGE_KEY,
+        value.toString(),
+      );
+      setClickToPlayPauseState(value);
+    } catch (err) {
+      console.log(
+        "[Kickstiny] Unable to persist click to play/pause preference",
+        err,
+      );
+    }
+  }, []);
+
   return {
     savedQuality,
     savedVolume,
     isIvsDebug,
+    clickToPlayPause,
     setSavedQuality,
     setSavedVolume,
     setIsIvsDebug,
+    setClickToPlayPause,
   };
 }

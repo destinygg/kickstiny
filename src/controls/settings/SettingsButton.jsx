@@ -10,7 +10,13 @@ import { useSettings } from "./useSettings.js";
 import { useQualitySelector } from "./useQualitySelector.js";
 import { useIvsDebug } from "./useIvsDebug.js";
 
-export default function SettingsButton({ core, container, shouldShow }) {
+export default function SettingsButton({
+  core,
+  container,
+  shouldShow,
+  clickToPlayPause,
+  onClickToPlayChange,
+}) {
   const {
     currentMenu,
     handleOpenChange,
@@ -59,6 +65,8 @@ export default function SettingsButton({ core, container, shouldShow }) {
                 selectedQuality={selectedQuality}
                 isIvsDebug={isIvsDebug}
                 onIvsDebugChange={setIsIvsDebug}
+                clickToPlayPause={clickToPlayPause}
+                onClickToPlayChange={onClickToPlayChange}
               />
             )}
 

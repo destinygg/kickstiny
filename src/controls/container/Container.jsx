@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import ControlsBar from "../bar/ControlsBar.jsx";
 import { useControlsVisibility } from "./useControlsVisibility.js";
 import { usePlaybackControl } from "../play/usePlaybackControl.js";
+import { usePreferences } from "../usePreferences.js";
 
 export default function Container({ core, videoContainer }) {
   const containerRef = useRef(null);
@@ -11,11 +12,15 @@ export default function Container({ core, videoContainer }) {
     barRef,
   );
   const { isPlaying, handlePlayPause } = usePlaybackControl(core);
+  const { clickToPlayPause, setClickToPlayPause } = usePreferences();
 
   const handleContainerClick = (e) => {
     const isInControlsBar = barRef.current?.contains(e.target);
     if (!isInControlsBar) {
-      handlePlayPause();
+      if (clickToPlayPause) {
+        handlePlayPause();
+      }
+      showControls();
     }
   };
 
@@ -33,6 +38,8 @@ export default function Container({ core, videoContainer }) {
         isPlaying={isPlaying}
         handlePlayPause={handlePlayPause}
         showControls={showControls}
+        clickToPlayPause={clickToPlayPause}
+        onClickToPlayChange={setClickToPlayPause}
       />
     </div>
   );

@@ -8,6 +8,8 @@ export default function MainMenu({
   selectedQuality,
   isIvsDebug,
   onIvsDebugChange,
+  clickToPlayPause,
+  onClickToPlayChange,
 }) {
   return (
     <>
@@ -23,6 +25,19 @@ export default function MainMenu({
           {selectedQuality.label}
           <ChevronRight size={16} />
         </span>
+      </DropdownMenu.Item>
+
+      <DropdownMenu.Item
+        className="dropdown__item dropdown__item--nav"
+        onSelect={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <span>Pause on Click</span>
+        <Switch
+          checked={clickToPlayPause}
+          onCheckedChange={onClickToPlayChange}
+        />
       </DropdownMenu.Item>
 
       {process.env.NODE_ENV === "dev" && (
