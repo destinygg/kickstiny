@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { usePreferences } from "../usePreferences.js";
 
 const AUTO_QUALITY = { label: "Auto", value: "auto" };
+const MAX_QUALITY = { label: "Maximum", value: "max" };
 
 export function useQualitySelector(core) {
   const { savedQuality, setSavedQuality } = usePreferences();
@@ -14,16 +15,34 @@ export function useQualitySelector(core) {
         return;
       }
 
-      const option =
-        value === "auto" ? AUTO_QUALITY : { label: value, value: value };
-
-      setSelectedQuality(option);
-
       if (value === "auto") {
+        setSelectedQuality(AUTO_QUALITY);
         core.setAutoQualityMode(true);
         setSavedQuality("auto");
         return;
       }
+
+      if (value === "max") {
+        // "max" is a fake option, resolves to the highest bitrate
+        const maxQuality = qualities[0];
+        if (maxQuality) {
+          setSelectedQuality({
+            value: "max",
+            label: maxQuality.name,
+          });
+          core.setAutoQualityMode(false);
+          core.setQuality(maxQuality);
+        } else {
+          // fallback to auto, keep saved selection as max
+          console.warn("[KickQuality] max quality could not be resolved");
+          setSelectedQuality(AUTO_QUALITY);
+          core.setAutoQualityMode(true);
+        }
+        setSavedQuality("max");
+        return;
+      }
+
+      setSelectedQuality({ label: value, value: value });
 
       const targetQuality = qualities.find((quality) => quality.name === value);
       if (!targetQuality) {
@@ -45,7 +64,9 @@ export function useQualitySelector(core) {
 
       if (arg?.key === "qualities") {
         if (arg.value?.length) {
-          setQualities(arg.value);
+          // defensive to ensure "max" functionality, `arg.value` should already be sorted
+          const sorted = [...arg.value].sort((a, b) => b.bitrate - a.bitrate);
+          setQualities(sorted);
         }
         return;
       }
@@ -76,8 +97,8 @@ export function useQualitySelector(core) {
       return;
     }
 
-    if (savedQuality === "auto") {
-      handleQualityChange("auto");
+    if (["auto", "max"].includes(savedQuality)) {
+      handleQualityChange(savedQuality);
       return;
     }
 
@@ -88,6 +109,7 @@ export function useQualitySelector(core) {
 
   const qualityOptions = [
     AUTO_QUALITY,
+    MAX_QUALITY,
     ...qualities.map((q) => ({ value: q.name, label: q.name })),
   ];
 
