@@ -1,7 +1,6 @@
 import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
-import { useVolumeControl } from "../volume/useVolumeControl.js";
 import { useFullscreenControl } from "../fullscreen/useFullscreenControl.js";
 import { useChannelInfo } from "../info/useChannelInfo.js";
 import { useKeyboardControls } from "./useKeyboardControls.js";
@@ -22,9 +21,14 @@ export default function ControlsBar({
   showControls,
   clickToPlayPause,
   onClickToPlayChange,
+  volume,
+  isMuted,
+  volumeScrollStep,
+  handleVolumeChange,
+  handleVolumeScroll,
+  handleMuteToggle,
+  setVolumeScrollStep,
 }) {
-  const { volume, isMuted, handleVolumeChange, handleMuteToggle } =
-    useVolumeControl(core);
   const { isFullscreen, handleFullscreenToggle } =
     useFullscreenControl(videoContainer);
   const { username, viewerCount, uptime } = useChannelInfo();
@@ -45,6 +49,7 @@ export default function ControlsBar({
     >
       <div
         ref={barRef}
+        onWheel={(event) => event.stopPropagation()}
         className={clsx("controls-bar", !shouldShow && "controls-bar--hidden")}
       >
         <div className="controls-bar__left">
@@ -57,6 +62,7 @@ export default function ControlsBar({
             volume={volume}
             isMuted={isMuted}
             onVolumeChange={handleVolumeChange}
+            onVolumeScroll={handleVolumeScroll}
             onMuteToggle={handleMuteToggle}
           />
         </div>
@@ -76,6 +82,8 @@ export default function ControlsBar({
             shouldShow={shouldShow}
             clickToPlayPause={clickToPlayPause}
             onClickToPlayChange={onClickToPlayChange}
+            volumeScrollStep={volumeScrollStep}
+            setVolumeScrollStep={setVolumeScrollStep}
           />
 
           <FullscreenButton

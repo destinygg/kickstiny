@@ -16,6 +16,8 @@ export default function SettingsButton({
   shouldShow,
   clickToPlayPause,
   onClickToPlayChange,
+  volumeScrollStep,
+  setVolumeScrollStep,
 }) {
   const {
     currentMenu,
@@ -67,6 +69,8 @@ export default function SettingsButton({
                 onIvsDebugChange={setIsIvsDebug}
                 clickToPlayPause={clickToPlayPause}
                 onClickToPlayChange={onClickToPlayChange}
+                volumeScrollStep={volumeScrollStep}
+                setVolumeScrollStep={setVolumeScrollStep}
               />
             )}
 
