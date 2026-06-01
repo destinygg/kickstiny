@@ -27,18 +27,21 @@ export function useVolumeControl(core) {
   const handleVolumeChange = useCallback(
     (newVolume) => {
       const clampedVolume = clampVolume(newVolume);
+      if (clampedVolume === volume) return;
       setVolume(clampedVolume);
       setSavedVolume(clampedVolume);
       core.setVolume(normalizeVolume(clampedVolume));
       core.setMuted(clampedVolume === 0);
       setIsMuted(clampedVolume === 0);
     },
-    [core, setSavedVolume],
+    [core, volume, setSavedVolume],
   );
 
   const handleVolumeScroll = useCallback(
     (event) => {
       event.preventDefault();
+
+      if (event.deltaY === 0) return;
 
       // Step 1 unit if trackpad, 5 units if mouse wheel
       const isLikelyTrackpad =
@@ -49,7 +52,7 @@ export function useVolumeControl(core) {
 
       handleVolumeChange(volume + direction * stepSize);
     },
-    [handleVolumeChange, volume],
+    [volume, handleVolumeChange],
   );
 
   const handleMuteToggle = useCallback(() => {
