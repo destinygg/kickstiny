@@ -39,7 +39,15 @@ export function useVolumeControl(core) {
   const handleVolumeScroll = useCallback(
     (event) => {
       event.preventDefault();
-      handleVolumeChange(volume + (event.deltaY < 0 ? +5 : -5));
+
+      // Step 5 units if mouse wheel, 1 unit if trackpad
+      const isLikelyTrackpad =
+        !Number.isInteger(event.deltaY) ||
+        (event.deltaMode === 0 && Math.abs(event.deltaY) < 10);
+      const stepSize = isLikelyTrackpad ? 1 : 5;
+      const direction = Math.sign(-event.deltaY);
+
+      handleVolumeChange(volume + direction * stepSize);
     },
     [handleVolumeChange, volume],
   );
