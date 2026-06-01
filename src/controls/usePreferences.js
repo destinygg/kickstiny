@@ -4,10 +4,8 @@ const QUALITY_STORAGE_KEY = "kickstiny.preference.quality";
 const VOLUME_STORAGE_KEY = "kickstiny.preference.volume";
 const IVS_DEBUG_STORAGE_KEY = "kickstiny.preference.ivsDebug";
 const CLICK_TO_PLAY_PAUSE_STORAGE_KEY = "kickstiny.preference.clickToPlayPause";
-const VOLUME_SCROLL_STEP_STORAGE_KEY = "kickstiny.preference.volumeScrollStep";
 
 const DEFAULT_VOLUME = 100;
-const DEFAULT_VOLUME_SCROLL_STEP = 5;
 
 export function usePreferences() {
   const [savedQuality, setSavedQualityState] = useState(() => {
@@ -54,21 +52,6 @@ export function usePreferences() {
     }
   });
 
-  const [volumeScrollStep, setVolumeScrollStepState] = useState(() => {
-    try {
-      const stored = window.localStorage.getItem(
-        VOLUME_SCROLL_STEP_STORAGE_KEY,
-      );
-      return stored !== null ? Number(stored) : DEFAULT_VOLUME_SCROLL_STEP;
-    } catch (err) {
-      console.log(
-        "[Kickstiny] Unable to read volume scroll step preference",
-        err,
-      );
-      return DEFAULT_VOLUME_SCROLL_STEP;
-    }
-  });
-
   const setSavedQuality = useCallback((value) => {
     try {
       window.localStorage.setItem(QUALITY_STORAGE_KEY, value);
@@ -111,31 +94,14 @@ export function usePreferences() {
     }
   }, []);
 
-  const setVolumeScrollStep = useCallback((value) => {
-    try {
-      window.localStorage.setItem(
-        VOLUME_SCROLL_STEP_STORAGE_KEY,
-        value.toString(),
-      );
-      setVolumeScrollStepState(value);
-    } catch (err) {
-      console.log(
-        "[Kickstiny] Unable to persist volume scroll step preference",
-        err,
-      );
-    }
-  }, []);
-
   return {
     savedQuality,
     savedVolume,
     isIvsDebug,
     clickToPlayPause,
-    volumeScrollStep,
     setSavedQuality,
     setSavedVolume,
     setIsIvsDebug,
     setClickToPlayPause,
-    setVolumeScrollStep,
   };
 }

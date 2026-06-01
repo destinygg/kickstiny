@@ -17,11 +17,9 @@ export default function Container({ core, videoContainer }) {
   const {
     volume,
     isMuted,
-    volumeScrollStep,
     handleVolumeChange,
     handleVolumeScroll,
     handleMuteToggle,
-    setVolumeScrollStep,
   } = useVolumeControl(core);
 
   const handleContainerClick = (e) => {
@@ -53,11 +51,9 @@ export default function Container({ core, videoContainer }) {
         onClickToPlayChange={setClickToPlayPause}
         volume={volume}
         isMuted={isMuted}
-        volumeScrollStep={volumeScrollStep}
         handleVolumeChange={handleVolumeChange}
         handleVolumeScroll={handleVolumeScroll}
         handleMuteToggle={handleMuteToggle}
-        setVolumeScrollStep={setVolumeScrollStep}
       />
     </div>
   );

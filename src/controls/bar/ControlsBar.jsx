@@ -23,11 +23,9 @@ export default function ControlsBar({
   onClickToPlayChange,
   volume,
   isMuted,
-  volumeScrollStep,
   handleVolumeChange,
   handleVolumeScroll,
   handleMuteToggle,
-  setVolumeScrollStep,
 }) {
   const { isFullscreen, handleFullscreenToggle } =
     useFullscreenControl(videoContainer);
@@ -82,8 +80,6 @@ export default function ControlsBar({
             shouldShow={shouldShow}
             clickToPlayPause={clickToPlayPause}
             onClickToPlayChange={onClickToPlayChange}
-            volumeScrollStep={volumeScrollStep}
-            setVolumeScrollStep={setVolumeScrollStep}
           />
 
           <FullscreenButton

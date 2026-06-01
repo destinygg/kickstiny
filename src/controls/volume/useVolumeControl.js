@@ -18,8 +18,7 @@ function getUrlMuted() {
 }
 
 export function useVolumeControl(core) {
-  const { savedVolume, setSavedVolume, volumeScrollStep, setVolumeScrollStep } =
-    usePreferences();
+  const { savedVolume, setSavedVolume } = usePreferences();
   const urlMuted = getUrlMuted();
   const [volume, setVolume] = useState(savedVolume);
   const [isMuted, setIsMuted] = useState(urlMuted);
@@ -40,11 +39,9 @@ export function useVolumeControl(core) {
   const handleVolumeScroll = useCallback(
     (event) => {
       event.preventDefault();
-      handleVolumeChange(
-        volume + (event.deltaY < 0 ? +volumeScrollStep : -volumeScrollStep),
-      );
+      handleVolumeChange(volume + (event.deltaY < 0 ? +5 : -5));
     },
-    [handleVolumeChange, volume, volumeScrollStep],
+    [handleVolumeChange, volume],
   );
 
   const handleMuteToggle = useCallback(() => {
@@ -95,7 +92,5 @@ export function useVolumeControl(core) {
     handleVolumeChange,
     handleVolumeScroll,
     handleMuteToggle,
-    volumeScrollStep,
-    setVolumeScrollStep,
   };
 }
