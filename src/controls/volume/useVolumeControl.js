@@ -40,7 +40,7 @@ export function useVolumeControl(core) {
     (event) => {
       event.preventDefault();
 
-      // Step 5 units if mouse wheel, 1 unit if trackpad
+      // Step 1 unit if trackpad, 5 units if mouse wheel
       const isLikelyTrackpad =
         !Number.isInteger(event.deltaY) ||
         (event.deltaMode === 0 && Math.abs(event.deltaY) < 10);
