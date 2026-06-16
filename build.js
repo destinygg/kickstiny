@@ -14,7 +14,7 @@ const userscriptHeader = `// ==UserScript==
 // @author       Destinygg
 // @match        https://player.kick.com/*
 // @grant        none
-// @run-at       document-idle
+// @run-at       document-start
 // @updateURL    https://r2cdn.destiny.gg/kickstiny/kickstiny.user.js
 // @downloadURL  https://r2cdn.destiny.gg/kickstiny/kickstiny.user.js
 // @supportURL   https://github.com/destinygg/kickstiny

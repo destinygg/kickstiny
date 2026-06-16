@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 import Container from "./controls/container/Container.jsx";
 import { waitForElement } from "./utils/dom.js";
 import { waitForIVSCore } from "./utils/ivs.js";
+import { installPlaybackFetchRetry } from "./utils/playbackFetchRetry.js";
 import mainStyles from "./main.scss";
 
 // Prevent multiple injections
 if (window.__kickQualityExtensionInjected) {
 } else {
   window.__kickQualityExtensionInjected = true;
+  installPlaybackFetchRetry();
 
   (async () => {
     try {

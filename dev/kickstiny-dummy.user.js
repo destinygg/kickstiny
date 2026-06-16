@@ -6,7 +6,7 @@
 // @author       Destinygg
 // @match        https://player.kick.com/*
 // @grant        GM_xmlhttpRequest
-// @run-at       document-idle
+// @run-at       document-start
 // ==/UserScript==
 
 (function () {
@@ -22,7 +22,7 @@
         // Inject the script content directly
         const script = document.createElement("script");
         script.textContent = response.responseText;
-        document.head.appendChild(script);
+        (document.head || document.documentElement).appendChild(script);
       } else {
         console.error(
           "Failed to load script:",

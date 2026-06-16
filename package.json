@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "node build.js --prod",
-    "dev": "concurrently \"node build.js --watch\" \"node dev/http.js\" --names \"build,server\" --prefix-colors \"blue,green\""
+    "dev": "concurrently \"node build.js --watch\" \"node dev/http.js\" --names \"build,server\" --prefix-colors \"blue,green\"",
+    "test": "node --test"
   },
   "dependencies": {
     "@destinygg/libstiny": "^1.8.1",
