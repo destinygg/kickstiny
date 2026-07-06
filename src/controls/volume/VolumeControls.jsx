@@ -9,6 +9,7 @@ export default function VolumeControls({
   volume,
   isMuted,
   onVolumeChange,
+  onVolumeScroll,
   onMuteToggle,
 }) {
   const label = isMuted ? "Unmute" : "Mute";
@@ -36,6 +37,7 @@ export default function VolumeControls({
         className="slider"
         value={[volume]}
         onValueChange={([value]) => onVolumeChange(value)}
+        onWheel={onVolumeScroll}
         min={0}
         max={100}
         step={1}
