@@ -39,7 +39,7 @@ if (window.__kickQualityExtensionInjected) {
     });
 
     injectStyles();
-    renderControls(core, video.parentElement);
+    renderControls(core, video.parentElement, video);
   }
 
   function injectStyles() {
@@ -49,7 +49,7 @@ if (window.__kickQualityExtensionInjected) {
     console.debug("[Kickstiny] Injected styles");
   }
 
-  function renderControls(core, videoContainer) {
+  function renderControls(core, videoContainer, videoElement) {
     const root = document.createElement("div");
     root.id = "kickstiny";
     videoContainer.appendChild(root);
@@ -58,6 +58,7 @@ if (window.__kickQualityExtensionInjected) {
     const reactComponent = React.createElement(Container, {
       core,
       videoContainer,
+      videoElement,
     });
     reactRoot.render(reactComponent);
     console.debug("[Kickstiny] Rendered custom controls");

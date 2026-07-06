@@ -14,6 +14,7 @@ import ChannelInfo from "../info/ChannelInfo.jsx";
 export default function ControlsBar({
   core,
   videoContainer,
+  videoElement,
   shouldShow,
   barRef,
   isPlaying,
@@ -27,8 +28,10 @@ export default function ControlsBar({
   handleVolumeScroll,
   handleMuteToggle,
 }) {
-  const { isFullscreen, handleFullscreenToggle } =
-    useFullscreenControl(videoContainer);
+  const { isFullscreen, handleFullscreenToggle } = useFullscreenControl(
+    videoContainer,
+    videoElement,
+  );
   const { username, viewerCount, uptime } = useChannelInfo();
 
   useKeyboardControls({

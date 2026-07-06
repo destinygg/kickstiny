@@ -5,7 +5,7 @@ import { usePlaybackControl } from "../play/usePlaybackControl.js";
 import { usePreferences } from "../usePreferences.js";
 import { useVolumeControl } from "../volume/useVolumeControl.js";
 
-export default function Container({ core, videoContainer }) {
+export default function Container({ core, videoContainer, videoElement }) {
   const containerRef = useRef(null);
   const barRef = useRef(null);
   const { shouldShow, showControls } = useControlsVisibility(
@@ -42,6 +42,7 @@ export default function Container({ core, videoContainer }) {
       <ControlsBar
         core={core}
         videoContainer={videoContainer}
+        videoElement={videoElement}
         shouldShow={shouldShow}
         barRef={barRef}
         isPlaying={isPlaying}
