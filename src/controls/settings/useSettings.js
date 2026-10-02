@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 
 const MENU_MAIN = "MENU_MAIN";
 const MENU_QUALITY = "MENU_QUALITY";
+const MENU_SPEED = "MENU_SPEED";
 
 export function useSettings(shouldShow) {
   const SETTINGS_CONSTANTS = {
     MENU_MAIN,
     MENU_QUALITY,
+    MENU_SPEED,
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +32,10 @@ export function useSettings(shouldShow) {
     setCurrentMenu(MENU_QUALITY);
   };
 
+  const navigateToSpeed = () => {
+    setCurrentMenu(MENU_SPEED);
+  };
+
   const navigateBack = () => {
     setCurrentMenu(MENU_MAIN);
   };
@@ -39,6 +45,7 @@ export function useSettings(shouldShow) {
     currentMenu,
     handleOpenChange,
     navigateToQuality,
+    navigateToSpeed,
     navigateBack,
     SETTINGS_CONSTANTS,
   };

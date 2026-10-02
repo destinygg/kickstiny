@@ -2,10 +2,14 @@ import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronRight } from "lucide-react";
 import Switch from "../../components/Switch.jsx";
+import { formatPlaybackRate } from "../../utils/format.js";
 
 export default function MainMenu({
   onNavigateQuality,
   selectedQuality,
+  showPlaybackSpeed,
+  playbackRate,
+  onNavigateSpeed,
   isIvsDebug,
   onIvsDebugChange,
   clickToPlayPause,
@@ -26,6 +30,22 @@ export default function MainMenu({
           <ChevronRight size={16} />
         </span>
       </DropdownMenu.Item>
+
+      {showPlaybackSpeed && (
+        <DropdownMenu.Item
+          className="dropdown__item dropdown__item--nav"
+          onSelect={(e) => {
+            e.preventDefault();
+            onNavigateSpeed();
+          }}
+        >
+          <span>Playback Speed</span>
+          <span className="dropdown__item-value">
+            {formatPlaybackRate(playbackRate)}
+            <ChevronRight size={16} />
+          </span>
+        </DropdownMenu.Item>
+      )}
 
       <DropdownMenu.Item
         className="dropdown__item dropdown__item--nav"

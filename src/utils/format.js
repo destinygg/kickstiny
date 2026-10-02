@@ -10,6 +10,10 @@ export function extractUsernameFromUrl(url) {
   return match[1];
 }
 
+export function formatPlaybackRate(rate) {
+  return rate === 1 ? "Normal" : `${rate}×`;
+}
+
 export function formatUptime(startTime) {
   if (!startTime) return null;
 

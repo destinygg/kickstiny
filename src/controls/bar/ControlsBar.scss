@@ -3,9 +3,8 @@
 
 .controls-bar {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: dgg.$space-2;
+  flex-direction: column;
+  gap: dgg.$space-1;
   background-color: dgg.$semantic-background-surface;
   border-radius: dgg.$semantic-radii-small;
   padding: dgg.$space-1;
@@ -16,6 +15,18 @@
 
   &--hidden {
     opacity: 0;
+  }
+
+  &:has(:focus-visible) {
+    opacity: 1;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: dgg.$space-2;
+    position: relative;
   }
 
   &__left {
@@ -36,5 +47,90 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+}
+
+.rewind-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-inline: dgg.$space-2;
+  font-size: 0.75rem;
+
+  &__slider {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__time {
+    min-width: 7ch;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  &__preview {
+    display: none;
+  }
+
+  &__error {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .slider__thumb:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 560px) {
+  // Make room for the compact live control beside the buttons.
+  .controls-bar:has(.rewind-controls) {
+    .controls-bar__center {
+      position: static;
+      transform: none;
+    }
+
+    .volume-controls .slider {
+      display: none !important;
+    }
+  }
+
+  .rewind-controls__time {
+    display: none;
+  }
+
+  .rewind-controls__slider {
+    height: 2.5rem;
+
+    .slider__thumb {
+      position: relative;
+    }
+  }
+
+  .rewind-controls__preview {
+    display: block;
+    position: absolute;
+    bottom: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.5rem;
+    border: 1px solid dgg.$semantic-border-default;
+    border-radius: dgg.$semantic-radii-small;
+    background: dgg.$semantic-background-surface;
+    color: dgg.$semantic-foreground-default;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    pointer-events: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 0.375rem solid transparent;
+      border-top-color: dgg.$semantic-background-surface;
+    }
   }
 }

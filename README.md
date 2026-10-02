@@ -21,6 +21,16 @@ A userscript that replaces the controls in the Kick embedded player with custom 
 
 ![Controls Bar](img/controls-bar.png)
 
+### Rewind on Bigscreen
+
+When Kick makes a recording of the current broadcast available, a timeline appears above the controls on destiny.gg/bigscreen. Drag it to watch an earlier moment. The channel name and dot turn gray while rewound; select the channel to **Go to live**, reloading only the Kick embed and leaving Bigscreen and chat in place.
+
+While rewound, **Playback Speed** in the settings menu offers speeds from 0.5× to 2×. It's hidden when live. Returning to live, including catching up to the recording's end, resets playback to 1×.
+
+On phone-sized screens, the bar hides the volume slider and shows a timestamp above the timeline thumb only while dragging. A compact red/gray **LIVE** indicator replaces the channel name; tap it while rewound to return to live.
+
+Rewind uses Kick's existing recording and player. The recording can take a few minutes to appear and trails the live feed; channels without an available recording keep the usual controls. Chat stays live while you rewind.
+
 ## How to Install
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/) for your web browser

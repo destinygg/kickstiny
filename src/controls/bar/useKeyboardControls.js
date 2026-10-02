@@ -9,6 +9,8 @@ export function useKeyboardControls({
 }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (event.defaultPrevented) return;
+
       // Prevent default behavior for these keys
       const key = event.key.toLowerCase();
 

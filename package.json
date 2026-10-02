@@ -4,6 +4,7 @@
   "description": "Replaces the controls in the Kick embedded player with custom controls that offer a volume slider, quality selector, and more.",
   "type": "module",
   "scripts": {
+    "test": "node --test",
     "build": "node build.js --prod",
     "dev": "concurrently \"node build.js --watch\" \"node dev/http.js\" --names \"build,server\" --prefix-colors \"blue,green\""
   },
@@ -25,6 +26,7 @@
     "concurrently": "^9.2.1",
     "esbuild": "^0.19.0",
     "esbuild-css-modules-plugin": "^3.1.5",
+    "jsdom": "^29.1.1",
     "prettier": "^3.7.2",
     "sass": "^1.94.2"
   },

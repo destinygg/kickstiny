@@ -6,6 +6,7 @@ import Button from "../../components/Button.jsx";
 import ControlsTooltip from "../ControlsTooltip.jsx";
 import MainMenu from "./MainMenu.jsx";
 import QualityMenu from "./QualityMenu.jsx";
+import SpeedMenu from "./SpeedMenu.jsx";
 import { useSettings } from "./useSettings.js";
 import { useQualitySelector } from "./useQualitySelector.js";
 import { useIvsDebug } from "./useIvsDebug.js";
@@ -16,6 +17,9 @@ export default function SettingsButton({
   shouldShow,
   clickToPlayPause,
   onClickToPlayChange,
+  showPlaybackSpeed,
+  playbackRate,
+  onPlaybackRateChange,
 }) {
   const {
     currentMenu,
@@ -23,13 +27,18 @@ export default function SettingsButton({
     isOpen,
     navigateBack,
     navigateToQuality,
-    SETTINGS_CONSTANTS: { MENU_MAIN, MENU_QUALITY },
+    navigateToSpeed,
+    SETTINGS_CONSTANTS: { MENU_MAIN, MENU_QUALITY, MENU_SPEED },
   } = useSettings(shouldShow);
 
   const { selectedQuality, qualityOptions, handleQualityChange } =
     useQualitySelector(core);
 
   const { isIvsDebug, setIsIvsDebug } = useIvsDebug(core);
+
+  // Speed only applies while rewound; fall back if that ends mid-menu.
+  const menu =
+    currentMenu === MENU_SPEED && !showPlaybackSpeed ? MENU_MAIN : currentMenu;
 
   return (
     <Tooltip.Root>
@@ -59,10 +68,13 @@ export default function SettingsButton({
             collisionPadding={8}
             onClick={(e) => e.stopPropagation()}
           >
-            {currentMenu === MENU_MAIN && (
+            {menu === MENU_MAIN && (
               <MainMenu
                 onNavigateQuality={navigateToQuality}
                 selectedQuality={selectedQuality}
+                showPlaybackSpeed={showPlaybackSpeed}
+                playbackRate={playbackRate}
+                onNavigateSpeed={navigateToSpeed}
                 isIvsDebug={isIvsDebug}
                 onIvsDebugChange={setIsIvsDebug}
                 clickToPlayPause={clickToPlayPause}
@@ -70,11 +82,19 @@ export default function SettingsButton({
               />
             )}
 
-            {currentMenu === MENU_QUALITY && (
+            {menu === MENU_QUALITY && (
               <QualityMenu
                 selectedQuality={selectedQuality}
                 options={qualityOptions}
                 onChange={handleQualityChange}
+                onNavigateBack={navigateBack}
+              />
+            )}
+
+            {menu === MENU_SPEED && (
+              <SpeedMenu
+                playbackRate={playbackRate}
+                onChange={onPlaybackRateChange}
                 onNavigateBack={navigateBack}
               />
             )}

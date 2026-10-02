@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
 
 export function usePlaybackControl(core) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(
+    () => core.getState() === "Playing",
+  );
 
   const handlePlayPause = useCallback(() => {
     if (isPlaying) {
