@@ -32,11 +32,22 @@ export default function Container({ core, videoContainer, videoElement }) {
     }
   };
 
+  const handleContainerAuxClick = (e) => {
+    if (e.button !== 1 || barRef.current?.contains(e.target)) {
+      return;
+    }
+
+    e.preventDefault();
+    handleMuteToggle();
+    showControls();
+  };
+
   return (
     <div
       ref={containerRef}
       className="kickstiny-container"
       onClick={handleContainerClick}
+      onAuxClick={handleContainerAuxClick}
       onWheel={handleVolumeScroll}
     >
       <ControlsBar
