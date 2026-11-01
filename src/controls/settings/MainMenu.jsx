@@ -27,30 +27,36 @@ export default function MainMenu({
         </span>
       </DropdownMenu.Item>
 
-      <DropdownMenu.Item
-        className="dropdown__item dropdown__item--nav"
-        onSelect={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <span>Pause on Click</span>
-        <Switch
-          checked={clickToPlayPause}
-          onCheckedChange={onClickToPlayChange}
-        />
-      </DropdownMenu.Item>
+      <SwitchItem
+        label="Pause on Click"
+        checked={clickToPlayPause}
+        onCheckedChange={onClickToPlayChange}
+      />
 
       {process.env.NODE_ENV === "dev" && (
-        <DropdownMenu.Item
-          className="dropdown__item dropdown__item--nav"
-          onSelect={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <span>IVS Debug</span>
-          <Switch checked={isIvsDebug} onCheckedChange={onIvsDebugChange} />
-        </DropdownMenu.Item>
+        <SwitchItem
+          label="IVS Debug"
+          checked={isIvsDebug}
+          onCheckedChange={onIvsDebugChange}
+        />
       )}
     </>
+  );
+}
+
+// The whole row toggles the setting. The switch only shows the state, so it
+// stays out of the tab order and ignores pointer events, which keeps a click
+// on it from toggling twice.
+function SwitchItem({ label, checked, onCheckedChange }) {
+  return (
+    <DropdownMenu.CheckboxItem
+      className="dropdown__item dropdown__item--nav dropdown__item--switch"
+      checked={checked}
+      onCheckedChange={onCheckedChange}
+      onSelect={(e) => e.preventDefault()}
+    >
+      <span>{label}</span>
+      <Switch size="small" checked={checked} tabIndex={-1} aria-hidden />
+    </DropdownMenu.CheckboxItem>
   );
 }

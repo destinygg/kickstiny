@@ -27,6 +27,11 @@
       }
     }
 
+    &--small {
+      width: dgg.$switch-small-width;
+      height: dgg.$switch-small-height;
+    }
+
     // Override libstiny's ::before thumb in favor of the Radix UI Switch thumb element.
     &::before {
       content: none;
@@ -46,6 +51,15 @@
 
     &[data-state="checked"] {
       transform: translateX(dgg.$switch-toggle-size);
+    }
+
+    .switch__slider--small & {
+      height: dgg.$switch-small-toggle-size;
+      width: dgg.$switch-small-toggle-size;
+
+      &[data-state="checked"] {
+        transform: translateX(dgg.$switch-small-toggle-size);
+      }
     }
   }
 }
