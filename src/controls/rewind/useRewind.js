@@ -89,7 +89,7 @@ export function useRewind(core, livestreamId) {
       playerRef.current?.seek(seconds, timeline.end);
       setTimeline({ ...timeline, position: seconds, rewound: true });
     } catch {
-      setError("Recording unavailable. Select the channel to return to live.");
+      setError("Recording unavailable.");
     }
   };
 

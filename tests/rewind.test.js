@@ -295,10 +295,7 @@ test("recording errors are reported only during replay", () => {
   assert.deepEqual(errors, []);
   player.seek(60, 300);
   core.emitter.emitter.emit("PlayerError");
-  assert.deepEqual(errors, [
-    null,
-    "Recording unavailable. Select the channel to return to live.",
-  ]);
+  assert.deepEqual(errors, [null, "Recording unavailable."]);
   assert.equal(nativeErrors, 2);
   player.dispose();
 });

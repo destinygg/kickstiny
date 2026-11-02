@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as Slider from "@radix-ui/react-slider";
+import Button from "../../components/Button.jsx";
 
 function timestamp(seconds) {
   const total = Math.max(0, Math.floor(seconds));
@@ -8,7 +9,7 @@ function timestamp(seconds) {
   return `${hours}:${minutes}:${String(total % 60).padStart(2, "0")}`;
 }
 
-export default function RewindControls({ timeline, error, seek }) {
+export default function RewindControls({ timeline, error, seek, goLive }) {
   const [preview, setPreview] = useState(null);
   const [dragging, setDragging] = useState(false);
   if (!timeline || timeline.end <= 0) return null;
@@ -19,9 +20,24 @@ export default function RewindControls({ timeline, error, seek }) {
   return (
     <div className="rewind-controls">
       {error ? (
-        <span className="rewind-controls__error" role="status">
-          {error}
-        </span>
+        <>
+          <span className="rewind-controls__error" role="status">
+            {error}
+          </span>
+          {/* Phones hide the channel name, so offer the way back here too. */}
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={goLive}
+            onKeyDown={(event) => {
+              if (event.key === " " || event.key === "Enter")
+                event.stopPropagation();
+            }}
+          >
+            <span className="rewind-controls__live-dot" />
+            Go to live
+          </Button>
+        </>
       ) : (
         <>
           <Slider.Root

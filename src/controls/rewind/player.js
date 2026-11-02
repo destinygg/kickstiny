@@ -18,7 +18,7 @@ export function createRewindPlayer(core, source, reloadLive, onError) {
     reloadLive();
   };
   const handleError = () => {
-    onError("Recording unavailable. Select the channel to return to live.");
+    onError("Recording unavailable.");
   };
 
   return {

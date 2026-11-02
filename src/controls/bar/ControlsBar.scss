@@ -75,6 +75,14 @@
   &__error {
     flex: 1;
     min-width: 0;
+    font: dgg.$body-200-medium;
+  }
+
+  &__live-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: dgg.$semantic-radii-pill;
+    background-color: dgg.$palette-danger-9;
   }
 
   .slider__thumb:focus-visible {

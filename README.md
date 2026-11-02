@@ -27,7 +27,7 @@ When Kick makes a recording of the current broadcast available, a timeline appea
 
 While rewound, **Playback Speed** in the settings menu offers speeds from 0.5× to 2×. It's hidden when live. Returning to live, including catching up to the recording's end, resets playback to 1×.
 
-On phone-sized screens, the timeline shows a timestamp above its thumb only while dragging. The channel name is hidden to keep the bar uncluttered, so drag to the end of the timeline to return to live.
+On phone-sized screens, the timeline shows a timestamp above its thumb only while dragging. The channel name is hidden to keep the bar uncluttered, so drag to the end of the timeline to return to live. If the recording fails to load, a **Go to live** button replaces the timeline at every screen size.
 
 Rewind uses Kick's existing recording and player. The recording can take a few minutes to appear and trails the live feed; channels without an available recording keep the usual controls. Chat stays live while you rewind.
 
