@@ -23,7 +23,7 @@ A userscript that replaces the controls in the Kick embedded player with custom 
 
 ### Rewind on Bigscreen
 
-When Kick makes a recording of the current broadcast available, a timeline appears above the controls on destiny.gg/bigscreen. Drag it to watch an earlier moment. The channel name and dot turn gray while rewound; select the channel to **Go to live**, reloading only the Kick embed and leaving Bigscreen and chat in place.
+When Kick makes a recording of the current broadcast available, a timeline appears above the controls on destiny.gg/bigscreen. Drag it to watch an earlier moment. The channel name and dot turn gray while rewound; select the channel or drag the timeline all the way right to **Go to live**, reloading only the Kick embed and leaving Bigscreen and chat in place.
 
 While rewound, **Playback Speed** in the settings menu offers speeds from 0.5× to 2×. It's hidden when live. Returning to live, including catching up to the recording's end, resets playback to 1×.
 

@@ -1,3 +1,6 @@
+// How close to the end of the recording counts as caught up with live.
+const LIVE_EDGE = 2;
+
 // IVS uses this large finite duration for media whose length is not known yet.
 export function recordingDuration(duration) {
   return Number.isFinite(duration) && duration > 0 && duration < 2 ** 30
@@ -38,13 +41,23 @@ export function createRewindPlayer(core, source, reloadLive, onError) {
       )
         return;
       const duration = recordingDuration(core.getDuration());
-      if (duration !== null && core.getPosition() >= duration - 2) goLive();
+      if (duration !== null && core.getPosition() >= duration - LIVE_EDGE)
+        goLive();
     },
+    // Returns whether playback moved to a point in the recording.
     seek(seconds, end) {
       const wasPaused = core.isPaused();
       const duration = rewound ? recordingDuration(core.getDuration()) : null;
-      const target = Math.max(0, Math.min(seconds, duration ?? end));
-      if (!Number.isFinite(target)) return;
+      const last = duration ?? end;
+      const target = Math.max(0, Math.min(seconds, last));
+      if (!Number.isFinite(target)) return false;
+
+      // Seeking to the very end can restart the recording (seen on iOS), and
+      // dragging all the way right means "go to live" anyway.
+      if (target >= last - LIVE_EDGE) {
+        if (rewound) goLive();
+        return false;
+      }
 
       onError(null);
       if (!rewound) {
@@ -61,6 +74,7 @@ export function createRewindPlayer(core, source, reloadLive, onError) {
       }
       core.seekTo(target);
       if (!wasPaused) core.play();
+      return true;
     },
     dispose() {
       if (!rewound) return;

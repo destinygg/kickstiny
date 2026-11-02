@@ -117,8 +117,8 @@ test("first seek takes over the current Ended handlers before loading once", () 
   assert.equal(offline, 1);
 });
 
-test("seeks clamp to recording duration, falling back for unknown IVS durations", () => {
-  for (const [duration, expected] of [
+test("seeks to the timeline end return live, using the recording duration or the fallback", () => {
+  for (const [duration, last] of [
     [120, 120],
     [Infinity, 150],
     [2 ** 30, 150],
@@ -126,13 +126,25 @@ test("seeks clamp to recording duration, falling back for unknown IVS durations"
     [0, 150],
   ]) {
     const core = fakeCore();
-    const player = createRewindPlayer(core, "recording", assert.fail, () => {});
+    let live = 0;
+    const player = createRewindPlayer(
+      core,
+      "recording",
+      () => live++,
+      () => {},
+    );
     player.seek(0, 150);
     core.duration = duration;
-    player.seek(180, 150);
-    assert.deepEqual(core.calls.at(-2), ["seek", expected]);
-    player.seek(-30, 150);
+    assert.equal(player.seek(last - 3, 150), true);
+    assert.deepEqual(core.calls.at(-2), ["seek", last - 3]);
+    assert.equal(player.seek(-30, 150), true);
     assert.deepEqual(core.calls.at(-2), ["seek", 0]);
+
+    const calls = core.calls.length;
+    assert.equal(player.seek(last - 1, 150), false);
+    assert.equal(player.seek(180, 150), false);
+    assert.equal(live, 1);
+    assert.deepEqual(core.calls.slice(calls), [["rate", 1]]);
     player.dispose();
   }
   assert.equal(recordingDuration(120), 120);
@@ -149,6 +161,21 @@ test("invalid seek targets do not load or start replay", () => {
   );
   player.seek(NaN, 150);
   player.seek(Infinity, Infinity);
+  assert.deepEqual(core.calls, []);
+  assert.equal(player.rewound, false);
+  player.dispose();
+});
+
+test("seeking to the timeline end while live stays on the live source", () => {
+  const core = fakeCore();
+  const player = createRewindPlayer(
+    core,
+    "recording",
+    assert.fail,
+    assert.fail,
+  );
+  assert.equal(player.seek(150, 150), false);
+  assert.equal(player.seek(149, 150), false);
   assert.deepEqual(core.calls, []);
   assert.equal(player.rewound, false);
   player.dispose();

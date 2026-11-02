@@ -86,8 +86,8 @@ export function useRewind(core, livestreamId) {
   const seek = (seconds) => {
     if (!timeline) return;
     try {
-      playerRef.current?.seek(seconds, timeline.end);
-      setTimeline({ ...timeline, position: seconds, rewound: true });
+      if (playerRef.current?.seek(seconds, timeline.end))
+        setTimeline({ ...timeline, position: seconds, rewound: true });
     } catch {
       setError("Recording unavailable.");
     }
