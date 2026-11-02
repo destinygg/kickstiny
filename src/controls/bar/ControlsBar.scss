@@ -84,18 +84,6 @@
 }
 
 @media (max-width: 560px) {
-  // Make room for the compact live control beside the buttons.
-  .controls-bar:has(.rewind-controls) {
-    .controls-bar__center {
-      position: static;
-      transform: none;
-    }
-
-    .volume-controls .slider {
-      display: none !important;
-    }
-  }
-
   .rewind-controls__time {
     display: none;
   }

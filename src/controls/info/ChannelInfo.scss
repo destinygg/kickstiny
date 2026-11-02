@@ -43,10 +43,6 @@
     max-width: 20ch;
   }
 
-  &__mobile-live {
-    display: none;
-  }
-
   &__live-dot {
     width: 0.5rem;
     height: 0.5rem;
@@ -74,30 +70,5 @@
 @media (max-width: 560px) {
   .channel-info {
     display: none;
-
-    // Kept as a compact control for returning to live from a rewind.
-    .controls-bar:has(.rewind-controls) & {
-      display: flex;
-    }
-
-    &__username {
-      justify-content: center;
-      width: 3rem;
-      height: 2.5rem;
-    }
-
-    &__username-text {
-      display: none;
-    }
-
-    &__mobile-live {
-      display: inline;
-      font-size: 0.625rem;
-    }
-
-    &__live-dot {
-      width: 0.375rem;
-      height: 0.375rem;
-    }
   }
 }

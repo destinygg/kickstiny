@@ -33,9 +33,6 @@ export default function ChannelInfo({
             >
               <span className="channel-info__live-dot" />
               <span className="channel-info__username-text">{username}</span>
-              <span className="channel-info__mobile-live" aria-hidden="true">
-                LIVE
-              </span>
             </button>
           </Tooltip.Trigger>
           <Tooltip.Portal>
